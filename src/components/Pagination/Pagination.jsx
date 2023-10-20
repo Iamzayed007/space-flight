@@ -16,7 +16,6 @@ const PaginationContent = () => {
     else{
       setCurrentPage(currentPage);
     }
-    console.log(currentPage);
   }
 
 
