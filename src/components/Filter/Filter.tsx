@@ -11,7 +11,6 @@ const Filter = (props: FilterProps) => {
   const [value, setValue] = useState("");
   const { setFilterType, setFilterValue } = useDataContext();
   const handleOnChange = (e) => {
-    console.log(e.target.value);
     setValue(e.target.value);
   };
   useEffect(() => {

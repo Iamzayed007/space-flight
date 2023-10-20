@@ -19,7 +19,7 @@ export function DataProvider({ children }) {
     setSearch,
     setFilterType,
     setFilterValue
-  } = useDataFetching("https://api.spacexdata.com/v3/launches"); // Provide the API endpoint here
+  } = useDataFetching(); 
 
   return (
     <DataContext.Provider

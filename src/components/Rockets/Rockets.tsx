@@ -1,35 +1,33 @@
-import React, { useEffect } from 'react'
-import {Container,Row,Col} from 'react-bootstrap'
+import React from 'react'
+import { Container, Row, Col } from 'react-bootstrap'
 import Rocket from '../Rocket/Rocket'
-import useDataFetching from '../../hooks/useDataFetching'
-import {useDataContext} from '../../contexts/DataContext'
+import { useDataContext } from '../../contexts/DataContext'
 const Rockets = () => {
-    const { data, loading, error } = useDataContext();
-    // console.log('data', data);
-    
+  const { data, loading } = useDataContext();
+
+
   return (
     <>
-    <Container>
+      <Container>
         {loading && <><span>Loading</span></>
 
         }
-         <Row> 
-        {
-            !loading &&  data && data.map((dt,index:any)=>
-            
-            <>
-            {/* <Row> */}
-            <Col lg={4} md={6} sm={12}  >
-            <Rocket key={index} rocket={dt}/>
-            </Col>
-            {/* </Row> */}
-           
+        <Row>
+          {
+            !loading && data && data.map((dt: object, index: number) =>
+                <Col lg={4} md={6} sm={12} key={index} >
+                  <Rocket rocket={dt} />
+                </Col>
+            )
+          }
+          {
+            data.length <= 0 && !loading && <>
+              <p>No Data Found</p>
             </>
-            ) 
-        }
-     {/* <Rocket/> */}
-     </Row> 
-    </Container>
+          }
+
+        </Row>
+      </Container>
     </>
   )
 }

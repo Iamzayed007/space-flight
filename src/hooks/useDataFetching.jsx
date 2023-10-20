@@ -14,65 +14,69 @@ function useDataFetching(url) {
 
 let itemsPerPage =9
   useEffect(() => {
-    console.log('filterType',filterType,filterValue);
     async function fetchData() {
       try {
-        const response = await fetch(url);
+        const response = await fetch("https://api.spacexdata.com/v3/launches");
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const jsonData = await response.json();
-        console.log('a');
+     
         if (upcoming) {
-          console.log('u');
+          setLoading(true);
          let result = jsonData.filter(dt=> dt.upcoming == true);
          setData(result);
         setTotalPages(Math.ceil(result.length / itemsPerPage));
         }
         else if (search !='') {
-          console.log('s',search);
+          setLoading(true);
           let result = jsonData.filter(dt=> dt.mission_name.toLowerCase().includes(search.toLowerCase()));
-          console.log('result',result);
           setData(result);
          setTotalPages(Math.ceil(result.length / itemsPerPage));
         }
         else if ( filterValue != '') {
-          console.log('f1');
+          setLoading(true);
           if (filterType === "By Launch Status") {
-            console.log('f2',typeof(filterValue));
             let value = null
             switch (filterValue) {
               case "true":
-                console.log('f3');
                 value = JSON.parse(filterValue)
                 break;
               case "false":
-                console.log('f3');
-                value = null
+                value =  JSON.parse(filterValue)
                 break;
             
               default:
                 break;
             }
-            // if (filterValue === "true") {
-            //   console.log('f3');
-            //   value = JSON.parse(filterValue)
-           
-            // } 
-            // if (filterValue === "true") {
-            //   console.log('f3');
-            //   value = JSON.parse(filterValue)
-           
-            // } 
             let result = jsonData.filter(dt=> dt.launch_success == value);
-            console.log('result',result);
+            setData(result);
+           setTotalPages(Math.ceil(result.length / itemsPerPage));
+          }
+          if (filterType === "By Launch Date") {
+            setLoading(true);
+            const today = new Date();
+            switch (filterValue) {
+              case "1":
+                today.setDate(today.getDate() - 7);
+                break;
+              case "2":
+                today.setMonth(today.getMonth() - 1);
+                break;
+              case "3":
+                today.setFullYear(today.getFullYear() - 1);
+                break;
+            
+              default:
+                break;
+            }
+            let result = jsonData.filter(dt=> dt.launch_date_utc >= today.toISOString());
             setData(result);
            setTotalPages(Math.ceil(result.length / itemsPerPage));
           }
        
         }
        else {
-        console.log('all');
         setData(jsonData);
         setTotalPages(Math.ceil(jsonData.length / itemsPerPage));
       }
@@ -84,7 +88,7 @@ let itemsPerPage =9
     }
 
     fetchData();
-  }, [url,totalPages,currentPage,upcoming,search,filterValue,filterType]);
+  }, [url,totalPages,currentPage,upcoming,search,filterValue,filterType,itemsPerPage]);
 
 
 

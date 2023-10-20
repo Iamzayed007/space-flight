@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../components/Header/Header";
 import Search from "../../components/Search/Search";
 import { Container, Row, Col } from "react-bootstrap";
@@ -9,20 +9,19 @@ import Pagination from "../../components/Pagination/Pagination";
 import { useDataContext } from '../../contexts/DataContext';
 const Home = () => {
   const [isChecked, setIsChecked] = useState(false);
-  const {setUpcoming} = useDataContext()
-  const handleUpcomming = (e) =>{
+  const { setUpcoming } = useDataContext()
+  const handleUpcomming = (e) => {
     setIsChecked(e.target.checked)
-  
-console.log(isChecked);
+
 
   }
 
   useEffect(() => {
     setUpcoming(isChecked)
   }, [isChecked])
-  
+
   return (
-    <>
+    <Container>
       <Header />
       <Container>
         <Row>
@@ -32,7 +31,7 @@ console.log(isChecked);
           <Col>
 
             <Col className="checkBox">
-              <input type="checkbox" checked={isChecked} onChange={handleUpcomming}/>
+              <input type="checkbox" checked={isChecked} onChange={handleUpcomming} />
               <span className="mx-3">Show Upcoming only</span>
             </Col>
 
@@ -40,19 +39,19 @@ console.log(isChecked);
               <Row>
                 <Col sm={12} md={6}>
                   {/* <Search /> */}
-                  <Filter title="By Launch Status"/>
+                  <Filter title="By Launch Status" />
                 </Col>
                 <Col sm={12} md={6}>
-                <Filter title="By Launch Date"/>
+                  <Filter title="By Launch Date" />
                 </Col>
               </Row>
             </Col>
           </Col>
         </Row>
       </Container>
-      <Rockets/>
-      <Pagination/>
-    </>
+      <Rockets />
+      <Pagination />
+    </Container>
   );
 };
 
