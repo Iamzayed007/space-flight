@@ -1,0 +1,14 @@
+.cardSection{
+    display: flex;
+    justify-content: center;
+    max-width: 348px !important;
+    img{
+       position: relative;
+        top: 2%;
+        left: 50%;
+        transform: translate(-50%, 2%);
+       height: 124px;
+       width:  124px;
+       object-fit: cover;
+    }
+}
